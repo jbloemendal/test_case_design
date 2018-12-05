@@ -29,6 +29,7 @@ class SodaMachine:
             self.withDraw = True
 
     def return50cs(self):
+        self.withDraw = False
         self.tmp = 0
 
     def canWithDraw(self):
@@ -37,8 +38,9 @@ class SodaMachine:
     def draw(self):
         if self.withDraw:
             self.total = self.total + self.tmp
-            self.tmp = 0
-            self.withDraw = False
+            self.tmp = self.tmp - 2
+            if self.tmp<2:
+              self.withDraw = False
 
     def reset(self):
         self.total = 0
