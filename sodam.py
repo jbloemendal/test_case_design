@@ -18,34 +18,51 @@ class SodaMachine:
 
     total = 0
     tmp = 0
-    withDraw = False
 
     def __init__(self):
         self.reset()
 
     def add50c(self):
         self.tmp = self.tmp + 1
-        if self.tmp > 1:
-            self.withDraw = True
 
     def return50cs(self):
-        self.withDraw = False
         self.tmp = 0
 
-    def canWithDraw(self):
-        return self.withDraw
+    def reduce(self, soda=False, muesli=False, nuts=False, fruits=False):
+        if soda and fruits and fruits and nuts:
+            return -1
+        elif soda or fruits and muesli or nuts:
+            return -2
+        if soda and fruits and muesli or nuts or fruits:
+            return -3
+        return 0
 
-    def draw(self):
-        if self.withDraw:
-            self.total = self.total + self.tmp
-            self.tmp = self.tmp - 2
-            if self.tmp<2:
-              self.withDraw = False
+    def cumulate(self, soda=False, muesli=False, nuts=False, fruits=False):
+        cumulative = 0 
+        if soda:
+            cumulative += 2
+        if fruits:
+            cumulative += 2
+        if muesli:
+            cumulative += 1
+        if nuts:
+            cumulative += 1
+        return cumulative
+
+    def canWithDraw(self, soda=True, muesli=False, nuts=False, fruits=False):
+        return self.tmp + self.reduce(soda, muesli, nuts, fruits) - self.cumulate(soda, muesli, nuts, fruits) >= 0
+
+    def draw(self, soda=True, muesli=False, nuts=False, fruits=False):
+        if self.canWithDraw(soda, muesli, nuts, fruits):
+            cumulative = self.reduce(soda, muesli, nuts, fruits) - self.cumulate(soda, muesli, nuts, fruits)
+            self.tmp -= cumulative 
+            self.total += cumulative
+            return True
+        return False
 
     def reset(self):
         self.total = 0
         self.tmp = 0
-        self.withDraw = False
 
 if __name__ == '__main__':
     sodaM = SodaMachine()
@@ -53,5 +70,5 @@ if __name__ == '__main__':
     sodaM.add50c()
     sodaM.add50c()
     print(sodaM.canWithDraw())
-    sodaM.draw()
+    print(sodaM.draw())
     print(sodaM.canWithDraw())

@@ -56,53 +56,6 @@ class SodaMachineTest(unittest.TestCase):
         sodaM.reset()
         self.assertEqual(False, sodaM.canWithDraw())
 
-    '''
-    total = 0 
-    tmp = 0
-    withDraw = False
-
-    A) identify states:
-    total: either 0 or !=0 (2)
-    tmp: either 0, 0<tmp<2, tmp=2, tmp>2 (4)
-    withDraw: true, false (2)
-
-    B)
-    "positive states"
-    1) start        S1: total=0, tmp=0, withDraw=false
-    2) add50c       S1->S2: total=0, tmp=1, withDraw=false
-    3) add50c       S2->S3: total=0, tmp=2, withDraw=true
-
-    (2*4*2)=16 states, total is neglectable
-    => (4*2)=8 states
-    => 5 negative states
-
-    4) S4: tmp=0, withDraw=true
-    5) S5: tmp=1, withDraw=true, unreachable
-    6) S6: tmp=2, withDraw=false, unreachable
-    7) S7: tmp=3, withDraw=true
-    8) S8: tmp=3, withDraw=false, unreachable
-
-    Are there transitions resulting in S4-S8?
-    
-    return50cs      S3->S4  soda free
-    add50c          S3->S7  pay to much
-   
-    => two mistakes
-
-    State Diagram:
-    S1->S1            reset
-    S1->S2            add50c
-        S2->S1        return50cs
-        S2->S3        add50c
-        S3->S1        draw
-        S3->S4        return50cs !!!
-            S4->S1    draw       !!!
-        S3->S7        add50c     !!!
-            S7->S1    draw       !!!
-            S7->S7    add50c
-            S7->S1    return50cs
-    '''
-
     def test_Return1E(self):
         sodaM = SodaMachine()
         sodaM.add50c()
@@ -110,12 +63,12 @@ class SodaMachineTest(unittest.TestCase):
         sodaM.return50cs()
         self.assertEqual(False, sodaM.canWithDraw())
 
-    def test_add150c(self):
+    def test_add1E_d1E(self):
         sodaM = SodaMachine()
         sodaM.add50c()
         sodaM.add50c()
-        sodaM.add50c()
         sodaM.draw()
+        sodaM.add50c()
         sodaM.add50c()
         self.assertEqual(True, sodaM.canWithDraw())
 
@@ -127,6 +80,7 @@ class SodaMachineTest(unittest.TestCase):
         sodaM.add50c()
         sodaM.draw()
         self.assertEqual(True, sodaM.canWithDraw())
+
 
 if __name__ == '__main__':
     unittest.main()
