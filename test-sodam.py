@@ -19,7 +19,7 @@ from sodam import SodaMachine
 
 class SodaMachineTest(unittest.TestCase):
 
-    # test each methods
+    # test each method
     def test_canWithDraw(self):
         sodaM = SodaMachine()
         self.assertEqual(False, sodaM.canWithDraw())
@@ -56,6 +56,7 @@ class SodaMachineTest(unittest.TestCase):
         sodaM.reset()
         self.assertEqual(False, sodaM.canWithDraw())
 
+    # State transitions tests
     def test_Return1E(self):
         sodaM = SodaMachine()
         sodaM.add50c()
@@ -81,51 +82,7 @@ class SodaMachineTest(unittest.TestCase):
         sodaM.draw()
         self.assertEqual(True, sodaM.canWithDraw())
 
-    '''
-    Combinatorial test
-
-    1) All combinations
-    s m f n
-    0 0 0 0   0E
-    0 0 0 1   50c
-    0 0 1 0   1E
-    0 0 1 1   1E
-    0 1 0 0   50c
-    0 1 0 1   1E
-    0 1 1 0   1E
-    0 1 1 1   150c
-    1 0 0 0   1E
-    1 0 0 1   1E
-    1 0 1 0   2E
-    1 0 1 1   2E
-    1 1 0 0   1E
-    1 1 0 1   150c
-    1 1 1 0   2E
-    1 1 1 1   250c
-
-
-    2) Two pair interaction?
-    s m f n
-    0 0 0 0   0E
-    0 0 0 1   50c
-    0 0 1 0   1E
-    0 0 1 1   1E
-    1 0 1 1   2E   ! s
-    1 0 0 1   1E
-    1 0 0 0   1E
-    1 0 1 0   2E   ! f
-    0 1 0 0   50c
-    0 1 0 1   1E
-    1 1 0 1   150c
-    1 1 0 0   1E
-    1 1 1 0   2E   ! f
-    1 1 1 1   250c 
-    0 1 1 1   150c ! s
-    0 1 1 0   1E
-
-    => fruits and soda
-    '''
-
+    # Combinatorial tests
     def test_comb1(self):
         sodaM = SodaMachine()
         self.assertEqual(False, sodaM.draw(False, False, False, False))
@@ -149,6 +106,11 @@ class SodaMachineTest(unittest.TestCase):
         sodaM.add50c()
         sodaM.add50c()
         self.assertEqual(True, sodaM.draw(True, False, False, True))
+
+    '''
+    TODO Elementary comparison tests
+    test service()
+    '''
 
 if __name__ == '__main__':
     unittest.main()
