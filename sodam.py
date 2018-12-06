@@ -29,9 +29,7 @@ class SodaMachine:
         self.tmp = 0
 
     def reduce(self, soda=False, muesli=False, nuts=False, fruits=False):
-        if (soda and fruits) and (nuts or muesli):
-            return 1
-        elif (soda or fruits) and (muesli or nuts):
+        if (soda or fruits) and (muesli or nuts):
             return 1
         return 0
 
