@@ -29,12 +29,10 @@ class SodaMachine:
         self.tmp = 0
 
     def reduce(self, soda=False, muesli=False, nuts=False, fruits=False):
-        if soda and fruits and fruits and nuts:
-            return -1
-        elif soda or fruits and muesli or nuts:
-            return -2
-        if soda and fruits and muesli or nuts or fruits:
-            return -3
+        if (soda and fruits) and (nuts or muesli):
+            return 1
+        elif (soda or fruits) and (muesli or nuts):
+            return 1
         return 0
 
     def cumulate(self, soda=False, muesli=False, nuts=False, fruits=False):
@@ -50,11 +48,11 @@ class SodaMachine:
         return cumulative
 
     def canWithDraw(self, soda=True, muesli=False, nuts=False, fruits=False):
-        return self.tmp + self.reduce(soda, muesli, nuts, fruits) - self.cumulate(soda, muesli, nuts, fruits) >= 0
+        return self.tmp > 0 and self.tmp >= self.cumulate(soda, muesli, nuts, fruits) - self.reduce(soda, muesli, nuts, fruits)
 
     def draw(self, soda=True, muesli=False, nuts=False, fruits=False):
         if self.canWithDraw(soda, muesli, nuts, fruits):
-            cumulative = self.reduce(soda, muesli, nuts, fruits) - self.cumulate(soda, muesli, nuts, fruits)
+            cumulative = self.cumulate(soda, muesli, nuts, fruits) - self.reduce(soda, muesli, nuts, fruits)
             self.tmp -= cumulative 
             self.total += cumulative
             return True
