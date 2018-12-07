@@ -81,6 +81,7 @@ class SodaMachine:
 
 
     def inventory(self, withDraw=False, soda=True, muesli=False, nuts=False, fruits=False):
+        # TODO simplify
         if soda and self.sodas >= 40:
             return False
         if muesli and self.mueslis >= 40:
@@ -101,7 +102,6 @@ class SodaMachine:
                 self.fruits += 1
 
             self.mut += 1
-
             self.service()
 
         return True
