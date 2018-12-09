@@ -27,6 +27,7 @@ class SodaMachine:
     serviceCode = 0 
     mut = 0
 
+
     def __init__(self):
         self.reset()
 
@@ -62,39 +63,28 @@ class SodaMachine:
 
     def service(self):
         # leak: int('00000001',2)
-        if self.total <= self.cumulate(self.sodas, self.mueslis, self.nuts, self.fruits):
-            self.serviceCode = self.serviceCode & 1
+        if self.total < self.cumulate(self.sodas, self.mueslis, self.nuts, self.fruits):
+            self.serviceCode = self.serviceCode | 1
 
         # service interval: int('00000010',1)
         if self.total > 0 and self.mut % 40 == 0 or self.tmp > 20:
-            self.serviceCode = self.serviceCode ^ 2
+            self.serviceCode = self.serviceCode | 2
 
-        # 1: leak
+        # 1: leakage
         # 2: service
-        # 3: leak & service
+        # 3: leakage & service
         return self.serviceCode
 
 
     def inventory(self, withDraw=False, soda=True, muesli=False, nuts=False, fruits=False):
-        # TODO simplify
-        if soda and self.sodas >= 40:
-            return False
-        if muesli and self.mueslis >= 40:
-            return False
-        if nuts and self.nuts >= 40:
-            return False
-        if fruits and self.fruits >= 40:
+        if soda and self.sodas >= 40 or muesli and self.mueslis >= 40 or nuts and self.nuts >= 40 or fruits and self.fruits >= 40:
             return False
 
         if withDraw:
-            if soda:
-                self.sodas += 1
-            if muesli:
-                self.mueslis += 1
-            if nuts:
-                self.nuts += 1
-            if fruits:
-                self.fruits += 1
+            self.sodas += soda and 1 or 0
+            self.mueslis += muesli and 1 or 0
+            self.nuts += nuts and 1 or 0
+            self.fruits += fruits and 1 or 0
 
             self.mut += 1
             self.service()
@@ -121,12 +111,29 @@ class SodaMachine:
         return False
 
 
+    def setTotal(self, total):
+        self.total = total
+
+
+    def setCumulate(self, sodas, mueslis, nuts, fruits):
+        self.sodas = sodas
+        self.mueslis = mueslis
+        self.nuts = nuts
+        self.fruits = fruits
+
+
+    def setMut(self, mut):
+        self.mut = mut
+
+
+    def setTmp(self, tmp):
+        self.tmp = tmp
+
+
     def reset(self):
+        self.sodas = self.mueslis = self.fruits = self.nuts = 0 
         self.total = 0
         self.tmp = 0
-
-        self.aService = 0
-        self.soda = self.mueslis = self.fruits = self.nuts = 0 
 
 if __name__ == '__main__':
     sodaM = SodaMachine()

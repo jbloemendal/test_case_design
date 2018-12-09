@@ -56,7 +56,7 @@ class SodaMachineTest(unittest.TestCase):
         sodaM.reset()
         self.assertEqual(False, sodaM.canWithDraw())
 
-    # State transitions tests
+    # Object state transitions tests
     def test_Return1E(self):
         sodaM = SodaMachine()
         sodaM.add50c()
@@ -82,7 +82,7 @@ class SodaMachineTest(unittest.TestCase):
         sodaM.draw()
         self.assertEqual(True, sodaM.canWithDraw())
 
-    # Combinatorial tests
+    # Combinatorial tests draw()
     def test_comb1(self):
         sodaM = SodaMachine()
         self.assertEqual(False, sodaM.draw(False, False, False, False))
@@ -108,9 +108,53 @@ class SodaMachineTest(unittest.TestCase):
         self.assertEqual(True, sodaM.draw(True, False, False, True))
 
     '''
-    TODO Elementary comparison tests
-    test service()
+    Elementary comparison tests service()
+    T1: 1110 total=39, cumulate=40, mut=40, tmp=0  => code 3
+    T2: 0110 total=40, cumulate=40, mut=40, tmp=0  => code 2
+    T3: 1001 total=0, cumulate=38, mut=38, tmp=21 => code 3
+    T4: 1101 total=38, cumulate=39, mut=39, tmp=21  => code 3
+    T5: 1000 total=38,  cumulate=39, mut=39, tmp=0  => code 1
     '''
+    def test_service_ect1(self):
+        sodaM = SodaMachine()
+        for i in range(0, 40):
+            sodaM.add50c()
+            sodaM.draw(False, True, False, False)
+        sodaM.setTotal(39)
+        self.assertEqual(3, sodaM.service())
+
+    def test_service_ect2(self):
+        sodaM = SodaMachine()
+        for i in range(0, 40):
+            sodaM.add50c()
+            sodaM.draw(False, True, False, False)
+        self.assertEqual(2, sodaM.service())
+
+    def test_service_ect3(self):
+        sodaM = SodaMachine()
+        for i in range(0, 38):
+            sodaM.add50c()
+            sodaM.draw(False, True, False, False)
+        sodaM.setTotal(0)
+        sodaM.setTmp(21)
+        self.assertEqual(3, sodaM.service())
+
+    def test_service_ect4(self):
+        sodaM = SodaMachine()
+        for i in range(0, 39):
+            sodaM.add50c()
+            sodaM.draw(False, True, False, False)
+        sodaM.setTotal(38)
+        sodaM.setTmp(21)
+        self.assertEqual(3, sodaM.service())
+
+    def test_service_ect5(self):
+        sodaM = SodaMachine()
+        for i in range(0, 39):
+            sodaM.add50c()
+            sodaM.draw(False, True, False, False)
+        sodaM.setTotal(0)
+        self.assertEqual(1, sodaM.service())
 
 if __name__ == '__main__':
     unittest.main()
