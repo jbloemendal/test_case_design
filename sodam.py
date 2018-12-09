@@ -61,22 +61,17 @@ class SodaMachine:
 
 
     def service(self):
-        # refill: int('0000001',2)
-        if  self.nuts > 40 or self.mueslis > 40 or self.soda > 40 or self.nuts > 40:
-            self.serviceCode = self.serviceCode ^ 1
-
-        # service interval: int('00000010',2)
-        if self.mut % 160 == 0:
-            self.serviceCode = self.serviceCode ** 2
-
-        # leak: int('00000100',2)
+        # leak: int('00000001',2)
         if self.total <= self.cumulate(self.sodas, self.mueslis, self.nuts, self.fruits):
-            self.serviceCode = self.serviceCode & 4
+            self.serviceCode = self.serviceCode & 1
 
-        # 1: refill
+        # service interval: int('00000010',1)
+        if self.total > 0 and self.mut % 40 == 0 or self.tmp > 20:
+            self.serviceCode = self.serviceCode ^ 2
+
+        # 1: leak
         # 2: service
-        # 4: leak
-        # 7: refill, service, leak
+        # 3: leak & service
         return self.serviceCode
 
 
