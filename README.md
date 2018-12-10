@@ -4,7 +4,7 @@ The SodaMachine provides an exercise to comprehend and practice the concepts of 
 Its an adaptation of the [research from D.C. Kunk et al.][1], including a few misstakes.
 You find the weekly content in the branches, the suggested litterature is optional.
 
-### week1: Software Complexity ###
+### week1: Static analysis ###
 * [Decision table][1]
 * [Equivalence partitioning][2]
 * [Programming complexity][3]
