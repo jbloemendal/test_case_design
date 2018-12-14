@@ -113,7 +113,7 @@ class SodaMachineTest(unittest.TestCase):
     T2: 0110 total=40, cumulate=40, mut=40, tmp=0  => code 2
     T3: 1001 total=0, cumulate=38, mut=38, tmp=21 => code 3
     T4: 1101 total=38, cumulate=39, mut=39, tmp=21  => code 3
-    T5: 1000 total=38,  cumulate=39, mut=39, tmp=0  => code 1
+    T5: 1100 total=38,  cumulate=39, mut=39, tmp=0  => code 1
     '''
     def test_service_ect1(self):
         sodaM = SodaMachine()
