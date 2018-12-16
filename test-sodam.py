@@ -16,6 +16,7 @@ https://pdfs.semanticscholar.org/c099/37b9d87cf8020fc897b882c412229f5a7c68.pdf
 
 import unittest
 from sodam import SodaMachine
+from feenet import AluUnit
 
 class SodaMachineTest(unittest.TestCase):
 
@@ -107,54 +108,35 @@ class SodaMachineTest(unittest.TestCase):
         sodaM.add50c()
         self.assertEqual(True, sodaM.draw(True, False, False, True))
 
-    '''
-    Elementary comparison tests service()
-    T1: 1110 total=39, cumulate=40, mut=40, tmp=0  => code 3
-    T2: 0110 total=40, cumulate=40, mut=40, tmp=0  => code 2
-    T3: 1001 total=0, cumulate=38, mut=38, tmp=21 => code 3
-    T4: 1101 total=38, cumulate=39, mut=39, tmp=21  => code 3
-    T5: 1100 total=38,  cumulate=39, mut=39, tmp=0  => code 1
-    '''
+    #Elementary comparison tests verify()
     def test_service_ect1(self):
-        sodaM = SodaMachine()
-        for i in range(0, 40):
-            sodaM.add50c()
-            sodaM.draw(False, True, False, False)
-        sodaM.setTotal(39)
-        self.assertEqual(3, sodaM.service())
+        sodaM = AluUnit()
+        code = sodaM.verify(39, 0, 0, 0, 40, 40, 0)
+        self.assertEqual(3, code)
 
     def test_service_ect2(self):
-        sodaM = SodaMachine()
-        for i in range(0, 40):
-            sodaM.add50c()
-            sodaM.draw(False, True, False, False)
-        self.assertEqual(2, sodaM.service())
+        sodaM = AluUnit()
+        code = sodaM.verify(40, 0, 0, 0, 40, 0, 0)
+        self.assertEqual(2, code)
 
     def test_service_ect3(self):
-        sodaM = SodaMachine()
-        for i in range(0, 38):
-            sodaM.add50c()
-            sodaM.draw(False, True, False, False)
-        sodaM.setTotal(0)
-        sodaM.setTmp(21)
-        self.assertEqual(3, sodaM.service())
+        sodaM = AluUnit()
+        code = sodaM.verify(0, 0, 0, 0, 38, 38, 21)
+        self.assertEqual(3, code)
 
     def test_service_ect4(self):
-        sodaM = SodaMachine()
-        for i in range(0, 39):
-            sodaM.add50c()
-            sodaM.draw(False, True, False, False)
-        sodaM.setTotal(38)
-        sodaM.setTmp(21)
-        self.assertEqual(3, sodaM.service())
+        sodaM = AluUnit()
+        code = sodaM.verify(38, 0, 0, 0, 39, 39, 21)
+        self.assertEqual(3, code)
 
     def test_service_ect5(self):
-        sodaM = SodaMachine()
-        for i in range(0, 39):
-            sodaM.add50c()
-            sodaM.draw(False, True, False, False)
-        sodaM.setTotal(0)
-        self.assertEqual(1, sodaM.service())
+        sodaM = AluUnit()
+        code = sodaM.verify(0, 0, 0, 0, 39, 39, 0)
+        self.assertEqual(1, code)
 
+    '''
+    TODO integration tests
+    '''
+ 
 if __name__ == '__main__':
     unittest.main()

@@ -1,5 +1,7 @@
 #!/anaconda/bin/python
 
+from feenet import FeeNetModul
+
 '''
 Copyright 2018 Jannis Bloemendal
 
@@ -16,6 +18,8 @@ https://pdfs.semanticscholar.org/c099/37b9d87cf8020fc897b882c412229f5a7c68.pdf
 
 class SodaMachine:
 
+    mId = 1
+
     total = 0
     tmp = 0
 
@@ -24,9 +28,9 @@ class SodaMachine:
     mueslis = 0
     nuts = 0
 
-    serviceCode = 0 
     mut = 0
 
+    serviceModul = None
 
     def __init__(self):
         self.reset()
@@ -61,21 +65,6 @@ class SodaMachine:
         return cumulative
 
 
-    def service(self):
-        # leak: int('00000001',2)
-        if self.total < self.cumulate(self.sodas, self.mueslis, self.nuts, self.fruits):
-            self.serviceCode = self.serviceCode | 1
-
-        # service interval: int('00000010',1)
-        if self.total > 0 and self.mut % 40 == 0 or self.tmp > 20:
-            self.serviceCode = self.serviceCode | 2
-
-        # 1: leakage
-        # 2: service
-        # 3: leakage & service
-        return self.serviceCode
-
-
     def inventory(self, withDraw=False, soda=True, muesli=False, nuts=False, fruits=False):
         if soda and self.sodas >= 40 or muesli and self.mueslis >= 40 or nuts and self.nuts >= 40 or fruits and self.fruits >= 40:
             return False
@@ -87,7 +76,8 @@ class SodaMachine:
             self.fruits += fruits and 1 or 0
 
             self.mut += 1
-            self.service()
+            if self.serviceModul:
+                self.serviceModul.info(self.mId, soda, nuts, fruits, muesli, self.mut, self.total, self.tmp)
 
         return True
 
@@ -135,11 +125,18 @@ class SodaMachine:
         self.total = 0
         self.tmp = 0
 
+    def setServiceModul(self, service):
+        self.serviceModul = service
+
 if __name__ == '__main__':
     sodaM = SodaMachine()
-    print(sodaM.canWithDraw())
-    sodaM.add50c()
-    sodaM.add50c()
-    print(sodaM.canWithDraw())
-    print(sodaM.draw())
-    print(sodaM.canWithDraw())
+
+    modul = FeeNetModul()
+    sodaM.setServiceModul(modul)
+
+    for i in range(0, 10):
+        sodaM.add50c()
+        sodaM.add50c()
+        if not sodaM.draw():
+            raise Exception('Drawing soda failed')
+
