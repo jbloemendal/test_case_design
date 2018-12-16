@@ -108,32 +108,6 @@ class SodaMachineTest(unittest.TestCase):
         sodaM.add50c()
         self.assertEqual(True, sodaM.draw(True, False, False, True))
 
-    #Elementary comparison tests verify()
-    def test_service_ect1(self):
-        sodaM = AluUnit()
-        code = sodaM.verify(39, 0, 0, 0, 40, 40, 0)
-        self.assertEqual(3, code)
-
-    def test_service_ect2(self):
-        sodaM = AluUnit()
-        code = sodaM.verify(40, 0, 0, 0, 40, 0, 0)
-        self.assertEqual(2, code)
-
-    def test_service_ect3(self):
-        sodaM = AluUnit()
-        code = sodaM.verify(0, 0, 0, 0, 38, 38, 21)
-        self.assertEqual(3, code)
-
-    def test_service_ect4(self):
-        sodaM = AluUnit()
-        code = sodaM.verify(38, 0, 0, 0, 39, 39, 21)
-        self.assertEqual(3, code)
-
-    def test_service_ect5(self):
-        sodaM = AluUnit()
-        code = sodaM.verify(0, 0, 0, 0, 39, 39, 0)
-        self.assertEqual(1, code)
-
     '''
     TODO integration tests
     '''
