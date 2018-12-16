@@ -26,8 +26,11 @@ You find the weekly content in the branches, the suggested litterature is option
 * [Elementary comparison testing][11]
 * [ahm (work in progress)][12]
 
+
 ### week5: Integration Testing
-* [Integration testing][13]
+* [Wikipedia][13]
+* [Guru99][14]
+
 
 [1]: https://en.wikipedia.org/wiki/Decision_table
 [2]: https://en.wikipedia.org/wiki/Equivalence_partitioning
@@ -42,3 +45,4 @@ You find the weekly content in the branches, the suggested litterature is option
 [11]: https://en.wikipedia.org/wiki/Elementary_comparison_testing
 [12]: https://github.com/jbloemendal/ahm/blob/master/ahm-paper.pdf
 [13]: https://en.wikipedia.org/wiki/Integration_testing
+[14]: https://www.guru99.com/integration-testing.html
