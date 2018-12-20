@@ -5,7 +5,7 @@ import websocket
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
-
+import threading
 
 class FeeNetModul():
 
@@ -20,6 +20,8 @@ class FeeNetModul():
 
 
 class AluUnit():
+
+    quostats = dict()
 
     def cumulate(self, soda=0, fruit=0, nuts=0, muesli=0):
         cumulative = 0
@@ -44,29 +46,31 @@ class AluUnit():
         # 2: service
         # 3: leakage & service
         return serviceCode
-    
- 
-class FeeNetServer(tornado.websocket.WebSocketHandler):
-
-    quostats = dict()
-    alu = None
 
     def enque(self, data):
         print('FeeNetServer enque()')
-        code = self.alu.verify(data['total'], data['soda'], data['fruit'], data['nut'], data['muesli'], data['mut'], data['tmp'])
+        code = self.verify(data['total'], data['soda'], data['fruit'], data['nut'], data['muesli'], data['mut'], data['tmp'])
         self.quostats[data['id']] = 0
         self.quostats[data['id']] = self.quostats[data['id']] & code
         
         if code > 0:
             usage = 'usage '+ data['id']+':'+' '+code
             print(usage)
+
+    def getQuostats(self):
+        return self.quostats
+    
+ 
+class FeeNetServer(tornado.websocket.WebSocketHandler):
+
+    alu = None
     
     def setAlu(alu):
         self.alu = alu
 
     def on_message(self, msg):
         data = json.loads(msg)
-        self.enque(data)
+        self.alu.enque(data)
 
 
 if __name__ == '__main__':

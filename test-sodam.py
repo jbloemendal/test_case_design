@@ -14,9 +14,16 @@ D.C. Kunk, N. Suchak, J. Gao, P. Hsia
 https://pdfs.semanticscholar.org/c099/37b9d87cf8020fc897b882c412229f5a7c68.pdf
 '''
 
+import json
+import time
+import threading
 import unittest
 from sodam import SodaMachine
 from feenet import AluUnit
+from feenet import FeeNetModul
+from feenetmock import FeeNetModulMock
+from feenetmock import FeeNetServerMock
+from feenetmock import AluUnitMock
 
 class SodaMachineTest(unittest.TestCase):
 
@@ -108,9 +115,75 @@ class SodaMachineTest(unittest.TestCase):
         sodaM.add50c()
         self.assertEqual(True, sodaM.draw(True, False, False, True))
 
+    #Elementary comparison tests verify()
+    def test_service_ect1(self):
+        sodaM = AluUnit()
+        code = sodaM.verify(39, 0, 0, 0, 40, 40, 0)
+        self.assertEqual(3, code)
+
+    def test_service_ect2(self):
+        sodaM = AluUnit()
+        code = sodaM.verify(40, 0, 0, 0, 40, 0, 0)
+        self.assertEqual(2, code)
+
+    def test_service_ect3(self):
+        sodaM = AluUnit()
+        code = sodaM.verify(0, 0, 0, 0, 38, 38, 21)
+        self.assertEqual(3, code)
+
+    def test_service_ect4(self):
+        sodaM = AluUnit()
+        code = sodaM.verify(38, 0, 0, 0, 39, 39, 21)
+        self.assertEqual(3, code)
+
+    def test_service_ect5(self):
+        sodaM = AluUnit()
+        code = sodaM.verify(0, 0, 0, 0, 39, 39, 0)
+        self.assertEqual(1, code)
+
     '''
-    TODO integration tests
+    Integration Test Case Design
+
+    Classes
+    1) SodaMachine
+    2) FreeNetModule  2a) FreeNetModuleMock
+    3) FreeNetServer
+    4) AluUnit        4a) AluUnitMock
+
+    Test1: Implicit path A -> B (SodaMachine -> AluUnit)
+    Test2: SodaMachine -> FreeNetModuleMock
+   (Test3: test network, throughput, strestest)
+    Test4: FreeNetServer -> AluUnitMock
     '''
+    #def test_integr1(self):
+    #test running system (non unit test)
  
+    def test_integr2(self):
+        sodaM = SodaMachine()
+        mock = FeeNetModulMock()
+        sodaM.setServiceModul(mock)
+
+        sodaM.add50c()
+        sodaM.add50c()
+        sodaM.draw()
+
+        dataSend = mock.getData()
+        self.assertEqual(1, len(dataSend))
+
+    #def test_integr3(self):
+    #test network, throughput, strestest
+
+    def test_integrD4(self):
+        server = FeeNetServerMock()
+
+        intercept = AluUnitMock()
+        unit = AluUnit()
+        intercept.setUnit(unit)
+
+        server.setAlu(intercept)
+
+        server.on_message('{"id": 1, "total": 2, "soda": 1, "muesli": 0, "nut": 0, "fruit": 0, "mut": 1, "tmp": 0}') 
+        self.assertEqual(0, intercept.getCumulateInvo()) 
+        
 if __name__ == '__main__':
     unittest.main()
