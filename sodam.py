@@ -134,7 +134,7 @@ if __name__ == '__main__':
     modul = FeeNetModul()
     sodaM.setServiceModul(modul)
 
-    for i in range(0, 10):
+    for i in range(1, 11):
         sodaM.add50c()
         sodaM.add50c()
         if not sodaM.draw():
