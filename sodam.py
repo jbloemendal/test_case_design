@@ -125,8 +125,10 @@ class SodaMachine:
         self.total = 0
         self.tmp = 0
 
+
     def setServiceModul(self, service):
         self.serviceModul = service
+
 
 if __name__ == '__main__':
     sodaM = SodaMachine()

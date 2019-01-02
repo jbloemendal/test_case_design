@@ -150,13 +150,11 @@ class SodaMachineTest(unittest.TestCase):
     3) FreeNetServer
     4) AluUnit        4a) AluUnitMock
 
-    Test1: Implicit path A -> B (SodaMachine -> AluUnit)
+   (Test1: Implicit path A -> B (SodaMachine -> AluUnit))
     Test2: SodaMachine -> FreeNetModuleMock
    (Test3: test network, throughput, strestest)
     Test4: FreeNetServer -> AluUnitMock
     '''
-    #def test_integr1(self):
-    #test running system (non unit test)
  
     def test_integr2(self):
         sodaM = SodaMachine()
@@ -170,10 +168,7 @@ class SodaMachineTest(unittest.TestCase):
         dataSend = mock.getData()
         self.assertEqual(1, len(dataSend))
 
-    #def test_integr3(self):
-    #test network, throughput, strestest
-
-    def test_integrD4(self):
+    def test_integr4(self):
         server = FeeNetServerMock()
 
         intercept = AluUnitMock()
