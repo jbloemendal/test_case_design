@@ -2,7 +2,7 @@
   
 The SodaMachine provides an exercise to comprehend and practice the concepts of test case design.
 Its an adaptation of the [research from D.C. Kunk et al.][7], including a few misstakes.
-You find the weekly content in the branches, the suggested litterature is optional.
+You find the weekly content in the branches, the suggested literature is optional.
 
 ### week1: Static analysis ###
 * [Decision table][1]
@@ -32,6 +32,15 @@ You find the weekly content in the branches, the suggested litterature is option
 * [Guru99][14]
 
 
+### week6: System Testing 
+* [BDD][15]
+* [Aloe][16]
+* [Exploratory testing][17]
+* [Acceptance testing][18]
+* [Selenium][19]
+* [Keyword driven testing][20]
+
+
 [1]: https://en.wikipedia.org/wiki/Decision_table
 [2]: https://en.wikipedia.org/wiki/Equivalence_partitioning
 [3]: https://en.wikipedia.org/wiki/Programming_complexity
@@ -46,3 +55,9 @@ You find the weekly content in the branches, the suggested litterature is option
 [12]: https://github.com/jbloemendal/ahm/blob/master/ahm-paper.pdf
 [13]: https://en.wikipedia.org/wiki/Integration_testing
 [14]: https://www.guru99.com/integration-testing.html
+[15]: https://en.wikipedia.org/wiki/Behavior-driven_development
+[16]: https://aloe.readthedocs.io/en/latest/index.html#
+[17]: https://en.wikipedia.org/wiki/Exploratory_testing
+[18]: https://en.wikipedia.org/wiki/Acceptance_testing
+[19]: https://en.wikipedia.org/wiki/Selenium_(software)
+[20]: https://en.wikipedia.org/wiki/Keyword-driven_testing
