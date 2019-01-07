@@ -8,9 +8,13 @@ You find the weekly content in the branches, the suggested litterature is option
 ### week6: System Testing 
 
 [BDD][2]
+
 [Aloe][3]
+
 [Exploratory testing][4]
+
 [Acceptance testing][5]
+
 [Selenium][6]
 
 [1]: https://pdfs.semanticscholar.org/c099/37b9d87cf8020fc897b882c412229f5a7c68.pdf
