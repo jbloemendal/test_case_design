@@ -41,8 +41,9 @@ class SodaMachine:
 
 
     def return50cs(self):
+        fare = self.tmp
         self.tmp = 0
-
+        return fare
 
     def reduce(self, soda=False, muesli=False, nuts=False, fruits=False):
         if (soda or fruits) and (nuts or muesli):
@@ -78,7 +79,7 @@ class SodaMachine:
             self.mut += 1
             if self.serviceModul:
                 self.serviceModul.info(self.mId, soda, nuts, fruits, muesli, self.mut, self.total, self.tmp)
-
+        
         return True
 
 
@@ -130,6 +131,21 @@ class SodaMachine:
         self.serviceModul = service
 
 
+    def getSodas(self):
+        return self.sodas
+
+
+    def getNuts(self):
+        return self.nuts
+
+
+    def getFruits(self):
+        return self.fruits
+
+    def getMueslis(self):
+        return self.mueslis 
+    
+
 if __name__ == '__main__':
     sodaM = SodaMachine()
 
@@ -140,5 +156,5 @@ if __name__ == '__main__':
         sodaM.add50c()
         sodaM.add50c()
         if not sodaM.draw():
-            raise Exception('Drawing soda failed')
+            raise Exception('drawing soda failed')
 
