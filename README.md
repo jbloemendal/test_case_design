@@ -1,8 +1,8 @@
 # SodaMachine - Test Case Design
   
 The SodaMachine provides an exercise to comprehend and practice the concepts of test case design.
-Its an adaptation of the [research from D.C. Kunk et al.][1], including intentional misstakes.
-You find the weekly content in the branches, the suggested litterature is optional.
+It's an adaptation of the [research from D.C. Kunk et al.][1], including intentional defects.
+You find the content in the branches, the suggested literature is optional.
 
 ### week2: Object State Testing 
 * [Object state testing][2]
