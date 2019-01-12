@@ -2,7 +2,7 @@
   
 The SodaMachine provides an exercise to comprehend and practice the concepts of test case design.
 It's an adaptation of the [research from D.C. Kunk et al.][1], including intentional defects.
-You find the content in the branches, the suggested litterature is optional.
+You find the content in the branches, the suggested literature is optional.
 
 
 ### week6: System Testing 
