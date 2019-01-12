@@ -21,7 +21,6 @@ https://pdfs.semanticscholar.org/c099/37b9d87cf8020fc897b882c412229f5a7c68.pdf
 class GuiSoda(Frame):
 
     forrader = None
-    quit = None
 
     def __init__(self, master=None):
         Frame.__init__(self, master)
