@@ -1,4 +1,4 @@
-# SodaMachine - Test Case Design
+# Test Case Design
   
 The SodaMachine provides an exercise to comprehend and practice the concepts of test case design.
 It's an adaptation of the research of [D.C. Kunk et al.][1], including intentional defects.
