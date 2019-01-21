@@ -1,0 +1,329 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html manifest="http://github/jbloemendal/SodaMachine/lean_draft_test_methods.html" version="0.01" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>(draft) \ Software test methods</title>
+        <style type="text/css">
+            body { font-family:"Times New Roman", Times, serif; margin-left: 2.3cm; margin-right: 1cm; counter-reset:h2 }
+            h1 { 1.5em }
+            h2 { 1.4em; counter-reset: h3}
+            h3 { 1.2em; counter-reset: h4}
+            h4 { counter-reset: h5 }
+            h5 { counter-reset: h6 }
+
+            h2.nocount:before, h3.nocount:before, h4.nocount:before, h5.nocount:before, h6.nocount:before { content: ""; counter-increment: none } 
+
+            h2:before { counter-increment: h2; content: counter(h2) ". " }
+            h3:before { counter-increment: h3; content: counter(h2) "." counter(h3) ". " }
+            h4:before { counter-increment: h4; content: counter(h2) "." counter(h3) "." counter(h4) ". " }
+            h5:before { counter-increment: h5; content: counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) ". " }
+            h6:before { counter-increment: h6; content: counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) "." counter(h6) ". " }
+
+            a:link { color: green; background-color: transparent; text-decoration: none; }
+            a:visited { color: pink; background-color: transparent; text-decoration: none; }
+            a:hover { color: red; background-color: transparent; text-decoration: underline; }
+            a:active { color: yellow; background-color: transparent; text-decoration: underline; }
+
+            pre { counter-reset: line -1}
+            code { counter-increment: line }
+            code:before { content: counter(line) }
+        </style>
+        </head>
+    <body>
+        <h1><a href="#draft" onclick="return -1">*</a>Software test methods</h1>
+        <p>
+        </p>
+
+        <h2>Complexity</h2>
+        <h3>Cyclomatic complexity<a href="#cc">[1]</a></h3>
+        <p>
+            M = C+1 = E-N+2 <br /><br />
+            E: the number of edges in the graph.<br />
+            N: the number of nodes in the graph.<br />
+            C: the number of elementary conditions.<br />
+
+            <h3>Risk<a href="#risk">[2]</a></h3>
+            <pre>
+   M   |     risk
+-------|----------------
+  1-10 | simple program
+ 11-20 | moderate risk
+ 21-50 | high risk
+ 51+   | very high risk
+       |
+            </pre>
+        </p>
+
+        <h3>Coverage<a href="#coverage">[3]</a></h3>
+        <p>Coverage = <sup>Number of coverage items exercised</sup>/<sub>Total number of coverage items</sub> x 100%
+        <ul>
+            <li>statement</li>
+            <li>condition</li>
+        </ul>
+        </p>
+
+        <h2>Test case design</h2>    
+        <p>
+            White-box test design technique: a procedure to derive and/or select test cases based on an analysis of the internal structure of a component or system <a href="#white_box_test">[4]</a> <a href="#white_box_test2">[5]</a>.<br /><br />
+        Black-box test technique: a procedure to derive and/or select test cases based on an analysis of the specification, either functional or non-functional, of a component or system without reference to its internal structure <a href="#black_box_test">[6]</a> <a href="#black_box_test2">[7]</a>.
+        </p>
+        
+        <h3>Boundary value analysis<a href="#testen">[0]</a><a href="#boundary">[8]</a></h3>
+        <div>
+            nibble = (b<sub>3</sub>b<sub>2</sub>b<sub>1</sub>b<sub>0</sub>)<sub>2</sub> = (0...17)<sub>8</sub> = (0...15)<sub>10</sub>
+
+        <pre>
+<code></code>
+<code>   0             15</code>
+<code>  -|--------------|--</code>
+<code></code>
+<code> m = 0 </code>
+<code> if v > -1 and v < 16:</code>
+<code>     m = v</code>
+<code> else:</code>
+<code>     m = v & 15</code>
+<code></code>
+
+        </pre> 
+        </div>
+
+        <h3>Decision table testing<a href="#testen">[0]</a><a href="#decision">[9]</a></h3>
+        <div>
+        <pre>
+ b2 b1 b0 | b | even 
+----------|---|------
+ 0  0  0  | 0 |  1   
+ 0  0  1  | 1 |  0   
+ 0  1  0  | 2 |  1   
+ 0  1  1  | 3 |  0   
+ 1  0  0  | 4 |  1   
+ 1  0  1  | 5 |  0   
+ 1  1  0  | 6 |  1   
+ 1  1  1  | 7 |  0   
+
+
+<code></code>
+<code> def nib(b2, b1, b0):</code>
+<code>     odd = 0</code>
+<code>     if (b2 or b1) and not b0:</code>
+<code>         odd = 0</code>
+<code>     elif b0:</code>
+<code>         odd = 1</code>
+<code>     return odd</code>
+<code></code>
+
+
+        </pre> 
+        </div>
+
+        <h3>Data combination testing<a href="#pair">[10]</a></h3>
+        <div>
+        ~93% bugs cease due to two way parameter interaction testing
+        <pre>
+    | c0 | c1 | c2 | c3
+----|----|----|----|-----
+ b2 | 1  | 0  | 0  | 1
+ b1 | 0  | 0  | 1  | 0
+ b0 | 0  | 1  | 0  | 1
+----|----|----|----|----
+ p  | 0  | 1  | 0  | 1
+
+        </pre>
+        </div>
+
+        <h3>Elementary comparison testing<a href="#element">[11]</a></h3>
+        <p class="ean">
+        <pre>
+Decisions
+
+3 if (b2 or b1) and not b0:
+4     odd = 0
+
+d1\    1        0
+    b2 b1 b0 b2 b1 b0
+b2  1  0  0  0  0  0
+b1  0  1  0 (0  0  0)
+b0 (1  0  0) 0  0  1
+
+
+
+5 if b0:
+6     odd = 1
+
+d2\ 1   0
+    b0  b0
+b0  0   1
+
+
+Test cases
+
+    | b2 | b1 | b0
+----|----|----|----
+ c3 | 1  | 0  | 0
+ c2 | 0  | 1  | 0
+ c1 | 0  | 0  | 1 
+ c0 | 0  | 0  | 0
+
+        </pre>
+        </p>
+
+        <h3>Object state testing<a href="#kung">[12]</a></h3>
+        <div>
+        <pre>
+<code> class SodaMachine:</code>
+<code></code>
+<code>    total = 0</code>
+<code>    tmp = 0</code>
+<code>    withDraw = False</code>
+<code></code>
+<code>    def add50c(self):</code>
+<code>        self.tmp = self.tmp + 1</code>
+<code>        if self.tmp > 1:</code>
+<code>            self.withDraw = True</code>
+<code></code>
+<code>   def draw(self):</code>
+<code>       if self.withDraw:</code>
+<code>           self.total = self.total + self.tmp</code>
+<code>           self.tmp = 0</code>
+<code>           self.withDraw = False</code>
+<code></code>
+<code>   def return50cs(self):</code>
+<code>      self.tmp = 0</code>
+
+        </pre>    
+
+        <p>
+
+        1) condition \ attributes<br />
+        2) form domain intervals such that the conditionals are evaluated to either true or false for all values in an interval<br />
+        3) ceaseles transition spanning tree<br />
+        </p>
+        <pre>
+Conditions
+
+9  if self.tmp > 1
+13 if self.withDraw
+
+        </pre>
+
+        <pre>
+States
+
+ state | tmp | draw  | valid 
+-------|-----|-------|-------
+   s0  |  <1 | false |  yes
+   s1  |  >1 | true  |  yes
+   s2  |  <1 | true  |  no
+   s3  |  >1 | false |  no
+
+
+Transitions
+
+c1) s0 -add50c-> s0 -add50c-> s1
+c2) s0 -add50c-> s0 -add50c-> s1 -return50cs-> s2
+
+
+        </pre>
+
+        <h2>Integration testing<a href="#integration">[13]</a></h2>
+        <p>
+        <ol>
+        <li>parse component interaction<br />
+        from
+        <ul>
+            <li>architecture</li>
+            <li>call sequences</li>
+        </ul>
+        effort
+        <ul>
+        <li>quadratic</li>
+        <li>linear</li>
+        </ul>
+        </li>
+        <li>set placeholders</li>
+        <li>analyse interaction parameters; relevant values</li>
+        <li>define expected \ actual</li>
+        <li>test asynchronous communication
+        <ul>
+        <li>performance</li>
+        <li>capacity</li>
+        <li>throughput</li>
+        <li>timing</li>
+        </ul></li>
+        </ol>
+
+        
+        </p>
+
+        <h2>System testing<a href="#system">[14]</a></h2>
+        <p>
+        <ul>
+        <li>automated \ manual</li>
+        <li>formal \ informal</li>
+        </ul>
+        <pre>
+
+       informal
+         ^
+         |                3
+         |               
+         |               1
+         |
+         |     4  2
+         | 5         6
+formal --|-----------------> manual
+         |
+     automated             
+
+
+       effort
+         ^
+         |           
+         | 4        6   
+         |    2        5
+         |         1
+         |
+         |       3  
+       --|-----------------> timeline
+         |
+
+
+        </pre>
+        <ol>
+            <li>session based<a href="#session">[15]</a></li>
+            <li>keyword driven<a href="#keyword">[16]</a></li>
+            <li>exploratory testing<a href="#testen">[0]</a><a href="#exp">[17]</a></li>
+            <li>behaviour driven testing<a href="#bdd">[18]</a></li>
+            <li>record and play<a href="#rec">[19]</a></li>
+            <li>acceptance testing<a href="#acc">[20]</a></li>
+        </ol> 
+        </p>
+
+        <hr></hr>
+        <p id="footnote">
+        <span id="testen">[0] Hossein Chamani et al. (2018). Aan de slag met software testen, Boom, Amsterdam. ISBN 978-9-024408-16-0</span><br />
+        <span id="cc">[1] <a href="https://en.wikipedia.org/wiki/Cyclomatic_complexity">Cyclomatic complexity, Thomas J. McCabe</a></span><br />
+        <span id="risk">[2] <a href="https://www.linuxjournal.com/article/8035">CHARNEY, Reg.: Programming Tools: Code Complexity Metrics. In: Linux Journal (2005), January</a></span><br />
+        <span id="coverage">[3] <a href="https://en.wikipedia.org/wiki/Code_coverage">Code coverage (Wikipedia)</a></span><br />
+        <span id="white_box_test">[4] <a href="https://glossary.istqb.org/search/white-box">White-box test technique (ISTQB)</a></span><br />
+        <span id="white_box_test2">[5] <a href="https://en.wikipedia.org/wiki/White-box_testing">White-box testing (Wikipedia)</a></span><br />
+        <span id="black_box_test">[6] <a href="https://glossary.istqb.org/search/black">Black-box test technique (ISTQB)</a></span><br />
+        <span id="black_box_test2">[7] <a href="https://en.wikipedia.org/wiki/Black-box_testing">Black-box testing (Wikipedia)</a></span><br />
+        <span id="boundary">[8] <a href="https://en.wikipedia.org/wiki/Boundary-value_analysis ">Boundary value analysis (Wikipedia)</a></span><br />
+        <span id="decision">[9] <a href="https://en.wikipedia.org/wiki/Decision_table">Decision table (Wikipedia)</a></span><br />
+        <span id="pair">[10] <a href="https://en.wikipedia.org/wiki/All-pairs_testing">All-pairs testing (Wikipedia)</a></span><br />
+        <span id="element">[11] <a href="https://en.wikipedia.org/wiki/Elementary_comparison_testing">Elementary comparison testing (Wikipedia)</a></span><br />
+        <span id="kung">[12] <a href="https://pdfs.semanticscholar.org/c099/37b9d87cf8020fc897b882c412229f5a7c68.pdf">Kung, D. C.; Suchak, N.; Gao and, J.; Hsia, P.; Toyoshima, Y.; Chen, C. (1994). "On Object State Testing". Proceedings of Computer Software and Applications Conference. IEEE Computer Society Press. pp. 222--227.</a></span><br />
+        <span id="integration">[13] Tilo Linz (2014). Testing in Scrum, pp. 79, Rocky Nook Inc., Santa Barbara. ISBN 978-1-937538-39-2</span><br />
+        <span id="system">[14] Tilo Linz (2014). Testing in Scrum, pp. 109, Rocky Nook Inc., Santa Barbara. ISBN 978-1-937538-39-2</span><br />
+        <span id="session">[15] <a href="https://en.wikipedia.org/wiki/Session-based_testing">Session-based testing (Wikipedia)</a></span><br />
+        <span id="keyword">[16] <a href="https://en.wikipedia.org/wiki/Keyword-driven_testing">Keyword-driven testing (Wikipedia)</a></span><br />
+        <span id="exp">[17] <a href="https://en.wikipedia.org/wiki/Exploratory_testing">Exploratory testing (Wikipedia)</a></span><br />
+        <span id="bdd">[18] <a href="https://en.wikipedia.org/wiki/Behavior-driven_development">Behavior-driven development (Wikipedia)</a></span><br />
+        <span id="rec">[19] <a href="https://en.wikipedia.org/wiki/Test_automation#Graphical_User_Interface_(GUI)_testing">Graphical User Interface (GUI) testing (Wikipedia)</a></span><br />
+        <span id="acc">[20] <a href="https://en.wikipedia.org/wiki/Acceptance_testing">Acceptance testing (Wik<u>i</u>pedia)</a></span><br />
+        <span id="draft"><a href="https://en.wikipedia.org/wiki/Draft_document">[+]</a></span><br /><br />
+        </p>
+
+    </body>
+</html>
