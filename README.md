@@ -4,6 +4,7 @@ The SodaMachine provides an exercise to comprehend and practice the concepts of 
 It's an adaptation of the research of [D.C. Kunk et al.][7], including intentional defects.
 You find the content in the branches, the suggested literature is optional.
 
+
 ### week1: Static analysis ###
 * [Decision table][1]
 * [Equivalence partitioning][2]
@@ -39,6 +40,7 @@ You find the content in the branches, the suggested literature is optional.
 * [Acceptance testing][18]
 * [Selenium][19]
 * [Keyword driven testing][20]
+* [Test card][21]
 
 
 [1]: https://en.wikipedia.org/wiki/Decision_table
@@ -61,3 +63,4 @@ You find the content in the branches, the suggested literature is optional.
 [18]: https://en.wikipedia.org/wiki/Acceptance_testing
 [19]: https://en.wikipedia.org/wiki/Selenium_(software)
 [20]: https://en.wikipedia.org/wiki/Keyword-driven_testing
+[21]: https://en.wikipedia.org/wiki/Test_card
